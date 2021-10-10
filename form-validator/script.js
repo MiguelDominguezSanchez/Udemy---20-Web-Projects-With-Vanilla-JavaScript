@@ -13,6 +13,7 @@ function showError(input, message) {
 }
 
 // Show success outline
+
 function showSuccess(input) {
 	const formControl = input.parentElement
 	formControl.className = 'form-control success'
@@ -25,11 +26,29 @@ function isValid(email) {
 	return re.test(String(email).toLowerCase())
 }
 
+// Check required
+function checkRequired(inputArr) {
+	inputArr.forEach(function (input) {
+		if (input.value.trim() === '') {
+			showError(input, `${getFieldName(input)} is required`)
+		} else {
+			showSuccess(input)
+		}
+	})
+}
+
+// Get fieldname
+function getFieldName(input) {
+	return input.id.charAt(0).toUpperCase() + input.id.slice(1)
+}
+
 // Event listeners
 form.addEventListener('submit', function (e) {
 	e.preventDefault()
 	console.log(username.value)
 
+	/*
+  // if statements are not scalable
 	if (username.value === '') {
 		showError(username, 'Username is required')
 	} else {
@@ -55,4 +74,8 @@ form.addEventListener('submit', function (e) {
 	} else {
 		showSuccess(password2)
 	}
+
+  */
+
+	checkRequired([username, email, password, password2])
 })
